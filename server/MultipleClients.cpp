@@ -30,26 +30,22 @@ void Server::updateDictionary(int key, T value, std::map<int, T> *dictionary){
 	typename std::map<int, T>::iterator it = dictionary->find(key);
 
 	// Updates key if found
-	if (it != dictionary->end())
-	{
+	if (it != dictionary->end()){
 		it->second = value;
 	}
 	// Else creates new key/value pair
-	else
-	{
+	else{
 		dictionary->insert(std::make_pair(key, value));
 	}
 }
 
 bool Server::userFirstMessage(int k){
 	std::map<int, bool>::iterator it = _userFirstMessage.find(k);
-	if (it == _userFirstMessage.end())
-	{
+	if (it == _userFirstMessage.end()){
 		// Did not find the key
 		return true;
 	}
-	else
-	{
+	else{
 		return it->second;
 	}
 }
@@ -57,13 +53,11 @@ bool Server::userFirstMessage(int k){
 void Server::getPK(int key, std::string message){
 	bool missingKey = Utils::findWord(message, "-----BEGIN RSA PUBLIC KEY-----");
 
-	if (!missingKey)
-	{
+	if (!missingKey){
 		std::cout << "Key socket #" << std::to_string(key) << message << std::endl;
 		this->updateDictionary(key, message, &_userToPK);
 	}
-	else
-	{
+	else{
 		// ? IF KEY NOT FOUND?
 		std::string empty_key{"-----NOT FOUND-----"};
 		this->updateDictionary(key, empty_key, &_userToPK);
@@ -84,8 +78,7 @@ void Server::eraseMaps(int sock){
 int Server::initServer(){
 	this->_listening = socket(AF_INET, SOCK_STREAM, 0);
 
-	if (_listening == -1)
-	{
+	if (_listening == -1){
 		std::cerr << "Can't create a socket!";
 		return -1;
 	}
@@ -96,14 +89,12 @@ int Server::initServer(){
 	hint.sin_port = htons(54000);
 	inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
 
-	if (bind(_listening, (sockaddr *)&hint, sizeof(hint)) == -1)
-	{
+	if (bind(_listening, (sockaddr *)&hint, sizeof(hint)) == -1){
 		std::cerr << "Can't bind to IP/Port";
 		return -2;
 	}
 	// Mark socket for listening in
-	if (listen(_listening, SOMAXCONN) == -1)
-	{
+	if (listen(_listening, SOMAXCONN) == -1){
 		std::cerr << "Can't listen";
 		return -3;
 	}
@@ -135,16 +126,13 @@ void Server::runServer(){
 				std::set<int> loggedUsersTemp = _loggedUsers;
 				_loggedUsers.insert(client);
 				std::string all_users;
-				for (int user : _loggedUsers)
-				{
+				for (int user : _loggedUsers){
 					all_users += std::to_string(user) + ";";
 				}
 
 				// Append public keys from other logged users
-				for (int user : _loggedUsers)
-				{
-					if (user != client)
-					{
+				for (int user : _loggedUsers){
+					if (user != client){
 						std::string temp_pk = _userToPK.at(user);
 						all_users += "," + std::to_string(user) + ":" + temp_pk + ",";
 					}
@@ -278,20 +266,17 @@ void Server::runServer(){
 						if (outSock != _listening && outSock != sock){
 							if (pK == ""){
 								std::map<int, char *>::iterator it = userToMessage.find(outSock);
-								if (it != userToMessage.end())
-								{
+								if (it != userToMessage.end()){
 									send(outSock, it->second, 256 + user_header.length() + 1, 0);
 									// Release buffer memory
 									delete it->second;
 								}
-								else
-								{
+								else{
 									// If user is not logged with official client, send giberish
 									send(outSock, ss.str().c_str(), ss.str().length() + 1, 0);
 								}
 							}
-							else
-							{
+							else{
 								// If users' first message, send back publick key
 								std::string header_pk = user_header + pK;
 								send(outSock, header_pk.c_str(), header_pk.size() + 1, 0);
