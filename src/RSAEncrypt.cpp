@@ -258,7 +258,8 @@ Reference:
 https://www.dynamsoft.com/codepool/how-to-use-openssl-generate-rsa-keys-cc.html
 
 */
-bool RSAEncrypt::generateKeys(){
+bool RSAEncrypt::generateKeys()
+{
 	std::string path = CERTIFICATES_PATH;
 	int ret = 0;
 	RSA *r = NULL;
@@ -271,23 +272,20 @@ bool RSAEncrypt::generateKeys(){
 	// 1. generate rsa key
 	bne = BN_new();
 	ret = BN_set_word(bne, e);
-	if (ret != 1)
-	{
+	if (ret != 1){
 		goto free_all;
 	}
 
 	r = RSA_new();
 	ret = RSA_generate_key_ex(r, bits, bne, NULL);
-	if (ret != 1)
-	{
+	if (ret != 1){
 		goto free_all;
 	}
 
 	// 2. save public key
 	bp_public = BIO_new_file((path + "public.pem").c_str(), "w+");
 	ret = PEM_write_bio_RSAPublicKey(bp_public, r);
-	if (ret != 1)
-	{
+	if (ret != 1){
 		goto free_all;
 	}
 
