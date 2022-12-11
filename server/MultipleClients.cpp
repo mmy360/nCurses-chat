@@ -3,12 +3,12 @@ Server class declaration
 */
 
 #include "MultipleClients.h"
+#include <string>
 #include <arpa/inet.h>
 #include <iostream>
 #include <netdb.h>
 #include <poll.h>
 #include <sstream>
-#include <string>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/time.h>
