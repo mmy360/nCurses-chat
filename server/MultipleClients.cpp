@@ -78,7 +78,7 @@ void Server::eraseMaps(int sock){
 int Server::initServer() {
 	this->_listening = socket(AF_INET, SOCK_STREAM, 0);
 
-	if (_listening == -1) {
+	if(_listening == -1) {
 		std::cerr << "Can't create a socket!";
 		return -1;
 	}
