@@ -152,7 +152,8 @@ void Server::runServer() {
 				send(outSock, strOut.c_str(), strOut.size() + 1, 0);
 			}
 			}
-		} else {
+		} 
+		else {
 			// Accept new message
 			char buf[4096];
 			memset(buf, 0, 4096);
