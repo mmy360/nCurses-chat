@@ -23,14 +23,12 @@ TODO: Remove this workaround
 Class declaration
 */
 
-RSAEncrypt::RSAEncrypt()
-{
+RSAEncrypt::RSAEncrypt(){
 	// Load keys to private members
 	this->loadKeys();
 }
 
-std::string RSAEncrypt::decryptWithPK(const std::string &message, const std::string &pK)
-{
+std::string RSAEncrypt::decryptWithPK(const std::string &message, const std::string &pK){
 	std::string decrypt_text;
 	BIO *keybio = BIO_new_mem_buf((unsigned char *)pK.c_str(), -1);
 	RSA *rsa = RSA_new();
@@ -39,8 +37,7 @@ std::string RSAEncrypt::decryptWithPK(const std::string &message, const std::str
 	rsa = PEM_read_bio_RSAPublicKey(keybio, &rsa, NULL, NULL);
 	// Note-------Use the public key in the second format for decryption (we use this format as an example)
 	// rsa = PEM_read_bio_RSA_PUBKEY(keybio, &rsa, NULL, NULL);
-	if (!rsa)
-	{
+	if (!rsa){
 		BIO_free_all(keybio);
 		return "LOOOOL";
 		// return decrypt_text;
@@ -56,19 +53,16 @@ std::string RSAEncrypt::decryptWithPK(const std::string &message, const std::str
 
 	int counter = 0;
 	// Decrypt the ciphertext in segments
-	while (pos < message.length())
-	{
+	while (pos < message.length()){
 		sub_str = message.substr(pos, len);
 		memset(sub_text, 0, len + 1);
 		ret = RSA_public_decrypt(sub_str.length(), (const unsigned char *)sub_str.c_str(), (unsigned char *)sub_text, rsa, RSA_PKCS1_PADDING);
-		if (ret >= 0)
-		{
+		if (ret >= 0){
 			decrypt_text.append(std::string(sub_text, ret));
 			pos += len;
 		}
 		counter++;
-		if (counter > 5000)
-		{
+		if (counter > 5000){
 			break;
 		}
 	}
@@ -81,14 +75,12 @@ std::string RSAEncrypt::decryptWithPK(const std::string &message, const std::str
 	return decrypt_text;
 }
 
-std::string RSAEncrypt::encryptWithSK(const std::string &message, const std::string &sK)
-{
+std::string RSAEncrypt::encryptWithSK(const std::string &message, const std::string &sK){
 	std::string encrypt_text;
 	BIO *keybio = BIO_new_mem_buf((unsigned char *)sK.c_str(), -1);
 	RSA *rsa = RSA_new();
 	rsa = PEM_read_bio_RSAPrivateKey(keybio, &rsa, NULL, NULL);
-	if (!rsa)
-	{
+	if (!rsa){
 		BIO_free_all(keybio);
 		return "NOTHING!";
 	}
@@ -104,13 +96,11 @@ std::string RSAEncrypt::encryptWithSK(const std::string &message, const std::str
 	int pos = 0;
 	std::string sub_str;
 	// Encrypt the data in segments (the return value is the length of the encrypted data)
-	while (pos < message.length())
-	{
+	while (pos < message.length()){
 		sub_str = message.substr(pos, block_len);
 		memset(sub_text, 0, key_len + 1);
 		ret = RSA_private_encrypt(sub_str.length(), (const unsigned char *)sub_str.c_str(), (unsigned char *)sub_text, rsa, RSA_PKCS1_PADDING);
-		if (ret >= 0)
-		{
+		if (ret >= 0){
 			encrypt_text.append(std::string(sub_text, ret));
 		}
 		pos += block_len;
@@ -124,8 +114,7 @@ std::string RSAEncrypt::encryptWithSK(const std::string &message, const std::str
 	return encrypt_text;
 }
 
-std::string RSAEncrypt::encryptWithPK(const std::string &message, const std::string &pK)
-{
+std::string RSAEncrypt::encryptWithPK(const std::string &message, const std::string &pK){
 	std::string encrypt_text;
 	BIO *keybio = BIO_new_mem_buf((unsigned char *)pK.c_str(), -1);
 	RSA *rsa = RSA_new();
@@ -147,15 +136,13 @@ std::string RSAEncrypt::encryptWithPK(const std::string &message, const std::str
 	std::string sub_str;
 	// Encrypt the data in segments (the return value is the length of the
 	// encrypted data)
-	while (pos < message.length())
-	{
+	while (pos < message.length()){
 		sub_str = message.substr(pos, block_len);
 		memset(sub_text, 0, key_len + 1);
 		ret = RSA_public_encrypt(sub_str.length(),
 								 (const unsigned char *)sub_str.c_str(),
 								 (unsigned char *)sub_text, rsa, RSA_PKCS1_PADDING);
-		if (ret >= 0)
-		{
+		if (ret >= 0){
 			encrypt_text.append(std::string(sub_text, ret));
 		}
 		pos += block_len;
@@ -169,16 +156,14 @@ std::string RSAEncrypt::encryptWithPK(const std::string &message, const std::str
 	return encrypt_text;
 }
 
-std::string RSAEncrypt::decryptWithSK(const std::string &message, const std::string &sK)
-{
+std::string RSAEncrypt::decryptWithSK(const std::string &message, const std::string &sK){
 	std::string decrypt_text;
 	RSA *rsa = RSA_new();
 	BIO *keybio;
 	keybio = BIO_new_mem_buf((unsigned char *)sK.c_str(), -1);
 
 	rsa = PEM_read_bio_RSAPrivateKey(keybio, &rsa, NULL, NULL);
-	if (rsa == nullptr)
-	{
+	if (rsa == nullptr){
 		return std::string();
 	}
 
@@ -191,23 +176,20 @@ std::string RSAEncrypt::decryptWithSK(const std::string &message, const std::str
 	int pos = 0;
 	int counter = 0;
 	// Decrypt the ciphertext in segments
-	while (pos < message.length())
-	{
+	while (pos < message.length()){
 		sub_str = message.substr(pos, key_len);
 		memset(sub_text, 0, key_len + 1);
 		ret = RSA_private_decrypt(sub_str.length(),
 								  (const unsigned char *)sub_str.c_str(),
 								  (unsigned char *)sub_text, rsa, RSA_PKCS1_PADDING);
-		if (ret >= 0)
-		{
+		if (ret >= 0){
 			decrypt_text.append(std::string(sub_text, ret));
 			pos += key_len;
 		}
 		counter++;
 		// Really bad workaround, but just for now
 		// To avoid encryption get stucked forever
-		if (counter > 5000)
-		{
+		if (counter > 5000){
 			break;
 		}
 	}
@@ -221,16 +203,13 @@ std::string RSAEncrypt::decryptWithSK(const std::string &message, const std::str
 
 // As per default, it will load keys from
 // the ./certificates folder
-void RSAEncrypt::loadKeys()
-{
+void RSAEncrypt::loadKeys(){
 	std::string path = CERTIFICATES_PATH;
 	std::ifstream sKeyRaw(path + "private.pem");
 	std::string sKey;
-	if (sKeyRaw)
-	{
+	if (sKeyRaw){
 		std::string line;
-		while (getline(sKeyRaw, line))
-		{
+		while (getline(sKeyRaw, line)){
 			sKey += line + "\n";
 		}
 		// Remove trailing space
@@ -240,11 +219,9 @@ void RSAEncrypt::loadKeys()
 
 	std::ifstream pKeyRaw(path + "public.pem");
 	std::string pKey;
-	if (pKeyRaw)
-	{
+	if (pKeyRaw){
 		std::string line;
-		while (getline(pKeyRaw, line))
-		{
+		while (getline(pKeyRaw, line)){
 			pKey += line + "\n";
 		}
 		// Remove trailing space
@@ -258,8 +235,7 @@ Reference:
 https://www.dynamsoft.com/codepool/how-to-use-openssl-generate-rsa-keys-cc.html
 
 */
-bool RSAEncrypt::generateKeys()
-{
+bool RSAEncrypt::generateKeys(){
 	std::string path = CERTIFICATES_PATH;
 	int ret = 0;
 	RSA *r = NULL;
