@@ -1,0 +1,1 @@
+/usr/bin/c++  -g -std=c++17 CMakeFiles/silver_server.dir/MultipleClients.cpp.o CMakeFiles/silver_server.dir/server.cpp.o -o silver_server 

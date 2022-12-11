@@ -1,0 +1,3 @@
+/home/eular/Desktop/chat/silver-sniffle/build/CMakeFiles/silver_sniffle.dir
+/home/eular/Desktop/chat/silver-sniffle/build/CMakeFiles/edit_cache.dir
+/home/eular/Desktop/chat/silver-sniffle/build/CMakeFiles/rebuild_cache.dir
