@@ -1,0 +1,111 @@
+In file included from /home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:5:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:24:29: error: ‘std::string’ has not been declared
+   24 |         void getPK(int key, std::string message);
+      |                             ^~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:25:14: error: ‘string’ in namespace ‘std’ does not name a type
+   25 |         std::string getPK(int key);
+      |              ^~~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:14:1: note: ‘std::string’ is defined in header ‘<string>’; did you forget to ‘#include <string>’?
+   13 | #include <map>
+  +++ |+#include <string>
+   14 | 
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:32:24: error: ‘string’ is not a member of ‘std’
+   32 |     std::map<int, std::string> _userToPK;
+      |                        ^~~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:32:24: note: ‘std::string’ is defined in header ‘<string>’; did you forget to ‘#include <string>’?
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:32:30: error: template argument 2 is invalid
+   32 |     std::map<int, std::string> _userToPK;
+      |                              ^
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:32:30: error: template argument 4 is invalid
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:34:5: error: ‘fd_set’ does not name a type
+   34 |     fd_set _master;
+      |     ^~~~~~
+In file included from /usr/include/x86_64-linux-gnu/sys/types.h:179,
+                 from /usr/include/stdlib.h:395,
+                 from /usr/include/c++/11/cstdlib:75,
+                 from /usr/include/c++/11/ext/string_conversions.h:41,
+                 from /usr/include/c++/11/bits/basic_string.h:6608,
+                 from /usr/include/c++/11/string:55,
+                 from /home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:6:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp: In destructor ‘Server::~Server()’:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:23:29: error: ‘_master’ was not declared in this scope
+   23 |         FD_CLR(_listening, &_master);
+      |                             ^~~~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp: At global scope:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:57:6: error: no declaration matches ‘void Server::getPK(int, std::string)’
+   57 | void Server::getPK(int key, std::string message){
+      |      ^~~~~~
+In file included from /home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:5:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:24:14: note: candidate is: ‘void Server::getPK(int, int)’
+   24 |         void getPK(int key, std::string message);
+      |              ^~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:15:7: note: ‘class Server’ defined here
+   15 | class Server {
+      |       ^~~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:73:13: error: no declaration matches ‘std::string Server::getPK(int)’
+   73 | std::string Server::getPK(int key){
+      |             ^~~~~~
+In file included from /home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:5:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:24:14: note: candidate is: ‘void Server::getPK(int, int)’
+   24 |         void getPK(int key, std::string message);
+      |              ^~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:15:7: note: ‘class Server’ defined here
+   15 | class Server {
+      |       ^~~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp: In member function ‘void Server::eraseMaps(int)’:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:81:19: error: request for member ‘erase’ in ‘((Server*)this)->Server::_userToPK’, which is of non-class type ‘int’
+   81 |         _userToPK.erase(sock);
+      |                   ^~~~~
+In file included from /usr/include/x86_64-linux-gnu/sys/select.h:30,
+                 from /usr/include/x86_64-linux-gnu/sys/types.h:179,
+                 from /usr/include/stdlib.h:395,
+                 from /usr/include/c++/11/cstdlib:75,
+                 from /usr/include/c++/11/ext/string_conversions.h:41,
+                 from /usr/include/c++/11/bits/basic_string.h:6608,
+                 from /usr/include/c++/11/string:55,
+                 from /home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:6:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp: In member function ‘int Server::initServer()’:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:111:18: error: ‘_master’ was not declared in this scope
+  111 |         FD_ZERO(&_master);
+      |                  ^~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/sys/types.h:179,
+                 from /usr/include/stdlib.h:395,
+                 from /usr/include/c++/11/cstdlib:75,
+                 from /usr/include/c++/11/ext/string_conversions.h:41,
+                 from /usr/include/c++/11/bits/basic_string.h:6608,
+                 from /usr/include/c++/11/string:55,
+                 from /home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:6:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:113:29: error: ‘_master’ was not declared in this scope
+  113 |         FD_SET(_listening, &_master);
+      |                             ^~~~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp: In member function ‘void Server::runServer()’:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:120:29: error: ‘_master’ was not declared in this scope
+  120 |                 auto copy = _master;
+      |                             ^~~~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:148:81: error: request for member ‘at’ in ‘((Server*)this)->Server::_userToPK’, which is of non-class type ‘int’
+  148 |                                                 std::string temp_pk = _userToPK.at(user);
+      |                                                                                 ^~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:272:73: error: cannot convert ‘std::__cxx11::basic_ostringstream<char>::__string_type’ {aka ‘std::__cxx11::basic_string<char>’} to ‘int’
+  272 |                                                 this->getPK(sock, ss.str());
+      |                                                                   ~~~~~~^~
+      |                                                                         |
+      |                                                                         std::__cxx11::basic_ostringstream<char>::__string_type {aka std::__cxx11::basic_string<char>}
+In file included from /home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:5:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:24:41: note:   initializing argument 2 of ‘void Server::getPK(int, int)’
+   24 |         void getPK(int key, std::string message);
+      |                             ~~~~~~~~~~~~^~~~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:273:65: error: no matching function for call to ‘Server::getPK(int&)’
+  273 |                                                 pK = this->getPK(sock);
+      |                                                      ~~~~~~~~~~~^~~~~~
+In file included from /home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:5:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:24:14: note: candidate: ‘void Server::getPK(int, int)’
+   24 |         void getPK(int key, std::string message);
+      |              ^~~~~
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.h:24:14: note:   candidate expects 2 arguments, 1 provided
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp: In member function ‘int Server::initServer()’:
+/home/eular/Desktop/chat/silver-sniffle/server/MultipleClients.cpp:114:1: warning: control reaches end of non-void function [-Wreturn-type]
+  114 | }
+      | ^
+make[2]: *** [CMakeFiles/silver_server.dir/build.make:76: CMakeFiles/silver_server.dir/MultipleClients.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:83: CMakeFiles/silver_server.dir/all] Error 2
+make: *** [Makefile:91: all] Error 2
