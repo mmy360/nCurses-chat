@@ -127,15 +127,15 @@ void Server::runServer() {
 			_loggedUsers.insert(client);
 			std::string all_users;
 			for (int user : _loggedUsers) {
-			all_users += std::to_string(user) + ";";
+				all_users += std::to_string(user) + ";";
 			}    
 
 			// Append public keys from other logged users
 			for (int user : _loggedUsers){
-			if (user != client){
-				std::string temp_pk = _userToPK.at(user); 
-				all_users += "," + std::to_string(user) + ":" + temp_pk + ","; 
-			}
+				if (user != client){
+					std::string temp_pk = _userToPK.at(user); 
+					all_users += "," + std::to_string(user) + ":" + temp_pk + ","; 
+				}
 			}
 
 			std::cout << all_users << std::endl;   
@@ -145,12 +145,12 @@ void Server::runServer() {
 
 			// Have tell you who has joined the chat
 			for (int outSock = 0; outSock <= FD_SETSIZE - 1; ++outSock) {
-			if (outSock != _listening && outSock != sock) {
-				std::ostringstream ss;
-				ss << "USER #" << client << " has joined the chat\r\n";
-				std::string strOut = ss.str();
-				send(outSock, strOut.c_str(), strOut.size() + 1, 0);
-			}
+				if (outSock != _listening && outSock != sock) {
+					std::ostringstream ss;
+					ss << "USER #" << client << " has joined the chat\r\n";
+					std::string strOut = ss.str();
+					send(outSock, strOut.c_str(), strOut.size() + 1, 0);
+				}
 			}
 		} 
 		else {
@@ -168,14 +168,14 @@ void Server::runServer() {
 			// Send message to other clients that user has left the chat
 			for (int outSock = 0; outSock <= FD_SETSIZE - 1; ++outSock) {
 				if (outSock != _listening && outSock != sock) {
-				std::ostringstream ss;
-				ss << "USER #" << sock << " has left the chat";
+					std::ostringstream ss;
+					ss << "USER #" << sock << " has left the chat";
 
-				// Remove user from maps
-				this->eraseMaps(sock); 
+					// Remove user from maps
+					this->eraseMaps(sock); 
 
-				std::string strOut = ss.str();
-				send(outSock, strOut.c_str(), strOut.size() + 1, 0);
+					std::string strOut = ss.str();
+					send(outSock, strOut.c_str(), strOut.size() + 1, 0);
 				}
 			}
 
@@ -232,19 +232,20 @@ void Server::runServer() {
 				size_t p = -1;
 				std::string tempWord = std::to_string(usr) + "_";
 				while ((p = msg.find(std::to_string(usr) + "_")) != std::string::npos) {
-				msg.replace(p, tempWord.length(), "");
+					msg.replace(p, tempWord.length(), "");
 				}
 
 				// Concatenate both char * manually
 				char *tempbuf = new char[256 + user_header.length()];
 				int j = 0;
 				for (int i = 0; i < 256 + user_header.length(); i++) {
-				if (i < user_header.length()) {
-					tempbuf[i] = user_header[i];
-				} else {
-					tempbuf[i] = msg[j];
-					j++;
-				}
+					if (i < user_header.length()) {
+						tempbuf[i] = user_header[i];
+					} 
+					else {
+						tempbuf[i] = msg[j];
+						j++;
+					}
 				}
 				// Create message to be sent to each logged user
 				userToMessage.insert(std::make_pair(usr, tempbuf));
